@@ -31,7 +31,7 @@ function getCurrentInputSection() {
     const cursorPosition = tagInput.selectionStart;
     const inputValue = tagInput.value;
     const sections = inputValue.split(',');
-    
+
     let currentPosition = 0;
     for (let i = 0; i < sections.length; i++) {
         currentPosition += sections[i].length + 1;
@@ -44,7 +44,7 @@ function getCurrentInputSection() {
             };
         }
     }
-    
+
     return {
         text: sections[sections.length - 1].trim(),
         sectionIndex: sections.length - 1,
@@ -88,11 +88,11 @@ function showSuggestions(suggestions, sectionInfo) {
 
             sections[sectionInfo.sectionIndex] = tag;
             tagInput.value = sections.join(',');
-            
+
             if (sectionInfo.sectionIndex === sections.length - 1) {
                 tagInput.value += ', ';
             }
-            
+
             tagInput.focus();
             suggestionsContainer.style.display = 'none';
         });
@@ -103,16 +103,23 @@ function showSuggestions(suggestions, sectionInfo) {
     suggestionsContainer.style.display = 'block';
 }
 
-chrome.storage.local.get(['savedTags'], function (result) {
+chrome.storage.local.get(['savedTags', 'savedBlacklistedTags'], function (result) {
     if (result.savedTags) {
         tags = result.savedTags;
-        renderTags();
     }
+    if (result.savedBlacklistedTags) {
+        blacklistedTags = result.savedBlacklistedTags;
+    }
+    renderTags();
 });
 
 function saveTags() {
-    chrome.storage.local.set({ savedTags: tags });
+    chrome.storage.local.set({ 
+        savedTags: tags,
+        savedBlacklistedTags: blacklistedTags 
+    });
 }
+
 
 function createTagElement(tagText) {
     const tagElement = document.createElement('div');
@@ -122,7 +129,7 @@ function createTagElement(tagText) {
     const closeButton = document.createElement('span');
     closeButton.innerHTML = '&times;';
 
-    closeButton.addEventListener('click', () => {
+    closeButton.addEventListener('click', (e) => {
         e.stopPropagation();
         removeTag(tagText);
     });
@@ -150,6 +157,11 @@ function removeTag(tagText) {
     const index = tags.indexOf(tagText);
     if (index > -1) {
         tags.splice(index, 1);
+
+        const blacklistIndex = blacklistedTags.indexOf(tagText);
+        if (blacklistIndex > -1) {
+            blacklistedTags.splice(blacklistIndex, 1);
+        }
         renderTags();
         saveTags();
     }
@@ -158,7 +170,11 @@ function removeTag(tagText) {
 function renderTags() {
     tagsContainer.innerHTML = '';
     tags.forEach(tag => {
-        tagsContainer.appendChild(createTagElement(tag));
+        const tagElement = createTagElement(tag);
+        if (blacklistedTags.includes(tag)) {
+            tagElement.classList.add('blacklisted');
+        }
+        tagsContainer.appendChild(tagElement);
     });
 }
 
@@ -191,6 +207,7 @@ tagInput.addEventListener('keypress', (e) => {
 });
 
 searchButton.addEventListener('click', () => {
+    
     if (tags.length > 0) {
         const whitelistTags = tags.filter(tag => !blacklistedTags.includes(tag));
         const blacklistTags = blacklistedTags;
@@ -207,6 +224,7 @@ searchButton.addEventListener('click', () => {
 
 function clearAllTags() {
     tags = [];
+    blacklistedTags = []
     renderTags();
     saveTags();
 }
