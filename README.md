@@ -1,5 +1,6 @@
 # Wattpad-Tag-Helper
 Chrome extension
+
 Simple script to help you browse stories using tags on Wattpad
 
 https://github.com/user-attachments/assets/88c35235-e456-40c3-aa45-755c2cf3df47
