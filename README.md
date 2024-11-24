@@ -10,5 +10,5 @@ Open a new page with the following adress
 https://www.wattpad.com/search/%23romance%20%23lgbt%20%23boss%20-teen
 Equivalent to typing this on search box: "#romance #lgbt #boss -teen"
 ```
-Main feature is [the tags](tag_counts.json) recommendations, which suggests tags in order of popularity. Sadly, i could only scrape around 1000 tags.
-
+Main feature is [the tags](tags.json) recommendations, which suggests tags in order of popularity.
+Scraped 31010 tags from 8148 unique stories!
