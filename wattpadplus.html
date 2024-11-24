@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        body {
+            width: 300px;
+            padding: 15px;
+            font-family: Arial, sans-serif;
+        }
+        
+        .container {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        
+        .input-group {
+            display: flex;
+            gap: 5px;
+        }
+        
+        input[type="text"] {
+            flex-grow: 1;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        
+        button {
+            padding: 8px 15px;
+            background-color: #4285f4;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        
+        button:hover {
+            background-color: #357abd;
+        }
+        
+        #clearButton {
+            align-content: center;
+            background-color: #dc3545;
+            padding: 5px 10px;
+        }
+        
+        #clearButton:hover {
+            background-color: #bb2d3b;
+        }
+        
+        .tags-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+            min-height: 50px;
+            padding: 5px;
+            border: 1px solid #eee;
+            border-radius: 4px;
+            flex-direction: row;
+        }
+        
+        .tag {
+            background-color: #e8f0fe;
+            padding: 5px 10px;
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            width: fit-content;
+            height: fit-content;
+        }
+        
+        .tag span {
+            cursor: pointer;
+            color: #666;
+        }
+
+            /* tag blacklist style */
+    .tag.blacklisted {
+    background-color: #ffcccc;
+    color: #b20000;
+    border: 1px solid #b20000;
+    }
+
+        /* suggestions style */
+            .suggestions-container {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background: white;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        max-height: 200px;
+        overflow-y: auto;
+        z-index: 1000;
+        display: none;
+    }
+    
+    .suggestion {
+        padding: 8px 12px;
+        cursor: pointer;
+        display: flex;
+        justify-content: space-between;
+    }
+    
+    .suggestion:hover {
+        background-color: #f0f0f0;
+    }
+    
+    .suggestion-value {
+        color: #666;
+    }
+    
+    .input-group {
+        position: relative;
+    }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Browse Tags</h1>
+        
+        <div class="input-group">
+            <input type="text" id="tagInput" placeholder="Enter tags (comma separated)">
+            <button id="addButton">Add</button>
+            <button id="clearButton"><img src="img/trash-solid.png" style="width: 12px;"></button>
+        </div>
+        
+        <div class="tags-container" id="tagsContainer">
+            <!-- Tags here-->
+        </div>
+        
+
+          <button id="searchButton">Search with Tags</button>
+
+    </div>
+    
+    <script src="popup.js"></script>
+</body>
+</html>

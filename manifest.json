@@ -1,0 +1,11 @@
+{
+  "name": "Wattpad Tag Helper",
+  "description": "Simple script to help you browse stories using tags on Wattpad",
+  "version": "1.0",
+  "permissions": ["storage"], 
+  "manifest_version": 3,
+  "action": {
+    "default_popup": "wattpadplus.html",
+    "default_icon": "img/watpaddplus_active.png"
+  }
+}
