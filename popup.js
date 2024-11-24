@@ -1,19 +1,19 @@
 /* Load the tags */
-const filePath = chrome.runtime.getURL("tag_counts.json");
+const filePath = chrome.runtime.getURL("tags.json");
 
 let tagDatabase = {};
 
 
 fetch(filePath)
-  .then(response => response.json())
-  .then(data => {
-    tagDatabase = data;
-  })
-  .catch(error => {
-    console.error("Error loading tag database:", error);
-  });
+    .then(response => response.json())
+    .then(data => {
+        tagDatabase = data;
+    })
+    .catch(error => {
+        console.error("Error loading tag database:", error);
+    });
 
-/* (tag_counts.json is installed with extension) */
+/* (tags.json is installed with extension) */
 
 let tags = [];
 let blacklistedTags = [];
