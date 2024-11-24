@@ -123,6 +123,7 @@ function createTagElement(tagText) {
     closeButton.innerHTML = '&times;';
 
     closeButton.addEventListener('click', () => {
+        e.stopPropagation();
         removeTag(tagText);
     });
 
