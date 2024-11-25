@@ -11,5 +11,4 @@ Result:
 Open a new page with url = www.wattpad.com/search/%23romance%20%23gay%20%23lovetriangle%20-teen
 Equivalent to typing on search box: "#romance #gay #lovetriangle -teen"
 ```
-
-Scraped 31010 tags from 8148 unique stories!
+tags: 31010 -> 35436
