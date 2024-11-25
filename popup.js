@@ -110,13 +110,17 @@ chrome.storage.local.get(['savedTags', 'savedBlacklistedTags'], function (result
     if (result.savedBlacklistedTags) {
         blacklistedTags = result.savedBlacklistedTags;
     }
-    renderTags();
+    renderTags(); 
 });
 
 function saveTags() {
     chrome.storage.local.set({ 
         savedTags: tags,
         savedBlacklistedTags: blacklistedTags 
+    }, () => {
+        if (chrome.runtime.lastError) {
+            console.error('Error saving tags:', chrome.runtime.lastError);
+        }
     });
 }
 
@@ -124,6 +128,10 @@ function saveTags() {
 function createTagElement(tagText) {
     const tagElement = document.createElement('div');
     tagElement.className = 'tag';
+    
+    if (blacklistedTags.includes(tagText)) {
+        tagElement.classList.add('blacklisted');
+    }
 
     const textNode = document.createTextNode(tagText);
     const closeButton = document.createElement('span');
@@ -224,7 +232,7 @@ searchButton.addEventListener('click', () => {
 
 function clearAllTags() {
     tags = [];
-    blacklistedTags = []
+    blacklistedTags = [];
     renderTags();
     saveTags();
 }
@@ -235,12 +243,11 @@ document.getElementById('clearButton').addEventListener('click', () => {
 
 function toggleBlacklistTag(tagElement, tagText) {
     if (blacklistedTags.includes(tagText)) {
-        // Remove from blacklist
         blacklistedTags = blacklistedTags.filter(tag => tag !== tagText);
         tagElement.classList.remove('blacklisted');
     } else {
-        // Add to blacklist
         blacklistedTags.push(tagText);
         tagElement.classList.add('blacklisted');
     }
+    saveTags();
 }
